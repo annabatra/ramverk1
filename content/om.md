@@ -24,4 +24,4 @@ Denna webbplatsen är en del av kursen [ramverk1](https://dbwebb.se/kurser/ramve
 En oerhört spännande kurs som ska lära mig mycket om de områden jag på förhand känner att jag behöver få en bättre grund i, så som PHP, moduler och tester!
 
 
-[FIGURE src=image/testing.png?w=450 caption="En representativ bild för kursen.."]
+[FIGURE src=image/testing.png?w=450 caption="En representativ bild för kursen."]
