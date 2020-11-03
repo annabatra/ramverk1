@@ -40,7 +40,7 @@ return [
         ],
         [
             "text" => "Url Validator",
-            "url" => "url",
+            "url" => "validate",
             "title" => "Validera url.",
         ],
         [
