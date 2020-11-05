@@ -32,12 +32,12 @@ class ValidateIpController implements ContainerInjectableInterface
         $ip = $_GET["ip"];
 
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-          $result ="Din ip är en ok IP4 address";
-          if (gethostbyaddr($ip) != $ip) {
-              $domain = gethostbyaddr($ip);
-          }
+            $result ="Din ip är en ok IPv4 address";
+            if (gethostbyaddr($ip) != $ip) {
+                $domain = gethostbyaddr($ip);
+            }
         } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            $result ="Din ip är en ok IP6 address";
+            $result ="Din ip är en ok IPv6 address";
             if (gethostbyaddr($ip) != $ip) {
                 $domain = gethostbyaddr($ip);
             }
@@ -47,7 +47,7 @@ class ValidateIpController implements ContainerInjectableInterface
 
         $data = [
             "result" => $result,
-            "domain" => $domain ?? null
+            "domain" => $domain ?? null,
         ];
 
         $page->add("validate/resultpage", $data);
@@ -55,6 +55,4 @@ class ValidateIpController implements ContainerInjectableInterface
             "title" => $title,
         ]);
     }
-
-
 }

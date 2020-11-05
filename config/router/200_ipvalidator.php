@@ -9,5 +9,10 @@ return [
             "mount" => "validate",
             "handler" => "\Anax\Validator\ValidateIpController",
         ],
+        [
+            "info" => "IP validator JSON format.",
+            "mount" => "ip",
+            "handler" => "\Anax\Validator\ValidateIpRestController",
+        ],
     ]
 ];

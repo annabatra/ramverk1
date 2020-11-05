@@ -39,7 +39,7 @@ return [
             "title" => "Om denna webbplats.",
         ],
         [
-            "text" => "Url Validator",
+            "text" => "IP Validator",
             "url" => "validate",
             "title" => "Validera url.",
         ],
