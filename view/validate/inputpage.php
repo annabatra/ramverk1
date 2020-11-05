@@ -1,7 +1,7 @@
 <article class="article">
     <h1>Validera</h1>
     <p>Skriv in en ip-adress för att se om den validerar.</p>
-    <form method="GET" action="ip/validateIp">
+    <form method="GET" action="validate/checkIp">
         <input name="ip" type="text">
         <input type="submit" value="Skicka">
     </form>
@@ -18,4 +18,11 @@
     <a href="ip/validateIpRest?ip=127.0.0.1">127.0.0.1</a><br>
     <a href="ip/validateIpRest?ip=1.2.3.4">1.2.3.4</a><br>
     <a href="ip/validateIpRest?ip=250.13.79.82">250.13.79.82</a>
+
+    <h3>IP-validering samt API</h3>
+    <p class="saucetext">På denna sida har ni möjlighet att validera olika IP-adresser med 'vanlig' info som resultat eller i JSON.
+    När ni väljer att få resultat i JSON-format så anropas ett API, och det går att utläsa i url:en efter er sökning. Ni kan också anropa det direkt via url:en, då används följande struktur:
+    htdocs/ip/validateIpRest?ip=127.0.0.1. Ni kan självklart byta ut 127.0.0.1 mot valfri ip-adress.</p>
+
+
 </article>

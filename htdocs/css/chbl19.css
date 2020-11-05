@@ -6955,3 +6955,8 @@ h4 {
     margin-bottom: 23px;
     border-bottom: 3px solid #eee;
 }
+
+.saucetext {
+    font-style: italic;
+    color: grey;
+}
