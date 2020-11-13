@@ -2,12 +2,11 @@
 
 namespace Anax\Validator;
 
-// use Anax\Commons\AppInjectableInterface;
-//
-// use Anax\Commons\AppInjectableTrait;
-
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Anax\Models\ValidateIp;
+use Anax\Models\GetGeo;
+use Anax\Models\GetIp;
 
 class ValidateIpController implements ContainerInjectableInterface
 {
@@ -18,7 +17,12 @@ class ValidateIpController implements ContainerInjectableInterface
         $page = $this->di->get("page");
         $title = "Validera din IP";
 
-        $page->add("validate/inputpage");
+        $ipGet = new GetIp();
+        $ip = [
+            "ip" => $ipGet->getIPAddress()
+        ];
+
+        $page->add("validate/inputpage", $ip["ip"]);
         return $page->render([
             "title" => $title,
         ]);
@@ -28,29 +32,20 @@ class ValidateIpController implements ContainerInjectableInterface
     {
         $page = $this->di->get("page");
         $title = "Resultat";
-
         $ip = $_GET["ip"];
 
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            $result ="Din ip är en ok IPv4 address";
-            if (gethostbyaddr($ip) != $ip) {
-                $domain = gethostbyaddr($ip);
-            }
-        } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            $result ="Din ip är en ok IPv6 address";
-            if (gethostbyaddr($ip) != $ip) {
-                $domain = gethostbyaddr($ip);
-            }
-        } else {
-            $result = "Tyvärr, inte en ok ip-adress";
-        }
+        $validator = new ValidateIp();
+        $geoTracker = new GetGeo();
+
 
         $data = [
-            "result" => $result,
-            "domain" => $domain ?? null,
+            "valid" => $validator->checkIp($ip)["result"],
+            "domain" => $validator->checkIp($ip)["domain"] ?? null,
+            "location" => $geoTracker->getGeo($ip) ?? null
         ];
 
         $page->add("validate/resultpage", $data);
+
         return $page->render([
             "title" => $title,
         ]);

@@ -4,6 +4,8 @@ namespace Anax\Validator;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Anax\Models\ValidateIp;
+use Anax\Models\GetGeo;
 
 class ValidateIpRestController implements ContainerInjectableInterface
 {
@@ -13,23 +15,18 @@ class ValidateIpRestController implements ContainerInjectableInterface
     {
         $ip = $_GET["ip"];
 
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            $res = $ip;
-            $domain = gethostbyaddr($ip);
-            $valid = "IPV4";
-        } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            $res = $ip;
-            $domain = gethostbyaddr($ip);
-            $valid = "IPV6";
-        } else {
-            $res = $ip;
-            $valid = "Ej OK";
-        }
 
-        return [[
-            "ip" => $res,
-            "domain" => $domain ?? null,
-            "valid" => $valid ?? null
-        ]];
+        $validator = new ValidateIp();
+        $geoTracker = new GetGeo();
+
+        $data = [
+            "valid" => $validator->checkIp($ip)["result"],
+            "domain" => $validator->checkIp($ip)["domain"] ?? null,
+            "location" => $geoTracker->getGeo($ip) ?? null
+        ];
+
+        json_encode($data, true);
+
+        return [[ $data ]];
     }
 }

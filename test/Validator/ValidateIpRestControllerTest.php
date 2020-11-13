@@ -48,7 +48,7 @@ class ValidateIpRestControllerTest extends TestCase
     {
         $_GET["ip"] = "0:0:0:0:0:0:0:1";
         $res = $this->controller->validateIpRestAction();
-        $this->assertEquals("DESKTOP-V627922", $res[0]["domain"]);
+        $this->assertEquals("DESKTOP-V627922", $res[0][0]["domain"]);
     }
 
     // testing with a non valid ip adress
@@ -56,7 +56,6 @@ class ValidateIpRestControllerTest extends TestCase
     {
         $_GET["ip"] = "Not Valid";
         $res = $this->controller->validateIpRestAction();
-        $this->assertEquals(null, $res[0]["domain"]);
-        $this->assertEquals("Ej OK", $res[0]["valid"]);
+        $this->assertEquals("Ej OK", $res[0][0]["valid"]);
     }
 }
