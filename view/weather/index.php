@@ -1,29 +1,29 @@
-<article class="article">
+<article class="article" style="
+    text-align:center;
+    min-height:300px;">
     <h1>Väderprognoser</h1>
-    <p>Skriv in en adress eller koordinater för att se en väderprognos för platsen.</p>
+    <p>Skriv in en ip eller koordinater för att se en väderprognos för platsen.</p>
     <form method="GET" action="weather/checkWeather">
-        <input name="location" type="text">
+        <input name="location" type="text"><br>
+        <label><input type="radio" name="type" value="prognos" checked>Prognos</label><br>
+        <label><input type="radio" name="type" value="history">Historik</label><br><br>
         <input type="submit" value="Skicka">
     </form>
 
     <h3>Validera fast med resultat i JSON-format</h3>
 
     <form method="GET" action="weatherapi/checkWeatherRest">
-        <input name="location" type="text">
+        <input name="location" type="text"><br>
+        <label><input type="radio" name="type" value="prognosAPI" checked>Prognos</label><br>
+        <label><input type="radio" name="type" value="historyAPI">Historik</label><br><br>
         <input type="submit" value="Validera JSON">
     </form>
 
-
-    <!-- <h3>Testroutes finns här om man inte har en egen ip (JSON)</h3>
-    <a href="ip/validateIpRest?ip=127.0.0.1">127.0.0.1</a><br>
-    <a href="ip/validateIpRest?ip=1.2.3.4">1.2.3.4</a><br>
-    <a href="ip/validateIpRest?ip=250.13.79.82">250.13.79.82</a>
-
-    <h3>IP-validering samt API</h3>
-    <p class="saucetext">På denna sida har ni möjlighet att validera olika IP-adresser med 'vanlig' info som resultat eller i JSON.
+    <h3>Väderprognos och historik, hur funkar det?</h3>
+    <p class="saucetext">På denna sida har ni möjlighet att se historiskt väder eller en prognos för kommande väder genom olika IP-adresser eller koordinater. Resultatet visas antingen som 'vanlig' info eller i JSON-format.
     När ni väljer att få resultat i JSON-format så anropas ett API, och det går att utläsa i url:en efter er sökning. Ni kan också anropa det direkt via url:en, då används följande struktur:
-    htdocs/ip/validateIpRest?ip=127.0.0.1. Ni kan självklart byta ut 127.0.0.1 mot valfri ip-adress.<br><br>
-    Från och med kmom02 i kursen har även models implementerats, vilket innebär att funktionaliteten hos de olika klasserna har flyttats ut och anropas ifrån dessa models. Detta i enlighet med MVC, vilket har förbättrat strukturen på koden.</p> -->
+    htdocs/weatherapi/checkWeatherRest?location=<b>LATITUDE</b>%2C<b>LONGITUDE</b>&type=prognosAPI. För in era koordinater vid de utmäkrerade latitude och longitude.<br><br>
+    Ovan exempel visar en prognos för väder, önskar ni se historik används följande exempelstruktur: htdocs/weatherapi/checkWeatherRest?location=<b>LATITUDE</b>%2C<b>LONGITUDE</b>&type=prognosAPI.</p>
 
 
 </article>

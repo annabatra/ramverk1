@@ -16,18 +16,33 @@ class WeatherJSONController implements ContainerInjectableInterface
         $location = $_GET["location"];
 
         $weather = $this->di->get("weather");
+        $type = $this->di->get("request")->getGet("type");
         $geo = new GetGeo();
 
 
-        if (strpos($location, ",") == true) {
-            $exploded = explode(",", $location);
-            $data = $weather->checkWeather($exploded[0], $exploded[1]);
-        } else {
-            $res = $geo->getGeo($location);
-            if ($res["longitude"] !== null) {
-                $data = $weather->checkWeather($res["latitude"], $res["longitude"]);
+        if ($type == 'prognosAPI') {
+            if (strpos($location, ",") == true) {
+                $exploded = explode(",", $location);
+                $data = $weather->checkWeather($exploded[0], $exploded[1]);
             } else {
-                $error = "Felaktig input, prova igen!";
+                $res = $geo->getGeo($location);
+                if ($res["longitude"] !== null) {
+                    $data = $weather->checkWeather($res["latitude"], $res["longitude"]);
+                } else {
+                    $error = "Felaktig input, prova igen!";
+                }
+            }
+        } elseif ($type == 'historyAPI') {
+            if (strpos($location, ",") == true) {
+                $exploded = explode(",", $location);
+                $data = $weather->checkHistory($exploded[0], $exploded[1]);
+            } else {
+                $res = $geo->getGeo($location);
+                if ($res["longitude"] !== null) {
+                    $data = $weather->checkHistory($res["latitude"], $res["longitude"]);
+                } else {
+                    $error = "Felaktig input, prova igen!";
+                }
             }
         }
 

@@ -1,14 +1,15 @@
 <?php
 
-namespace Anax\Validator;
+namespace Anax\Controller;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
+use Anax\Weather\WeatherController;
 
 /**
  * test the ValidateIpController.
  */
-class ValidateIpControllerTest extends TestCase
+class WeatherControllerTest extends TestCase
 {
     // Create the di container.
     public $di;
@@ -21,6 +22,8 @@ class ValidateIpControllerTest extends TestCase
     public function setUp()
     {
 
+        global $di;
+
         // di setup
         $this->di = new DIFactoryConfig();
         $this->di->loadServices(ANAX_INSTALL_PATH . "/config/di");
@@ -29,7 +32,7 @@ class ValidateIpControllerTest extends TestCase
         $this->di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         // Setup the controller
-        $this->controller = new ValidateIpController();
+        $this->controller = new WeatherController();
         $this->controller->setDI($this->di);
         //$this->controller->initialize();
     }
@@ -43,27 +46,99 @@ class ValidateIpControllerTest extends TestCase
         $this->assertIsObject($res);
     }
 
-    /**
-     * Test the route "checkIpAction" in three ways
-     */
-    public function testcheckIpActionIpv4()
+
+    public function testcheckWeatherActionCoordinates()
     {
-        $_GET["ip"] = "127.0.0.1";
-        $res = $this->controller->checkIpAction();
+        $_GET["location"] = "56.16280,15.58697";
+        $_GET["type"] = "prognos";
+
+        $res = $this->controller->checkWeatherAction();
         $this->assertIsObject($res);
     }
 
-    public function testcheckIpActionIpv6()
+    public function testcheckWeatherActionCoordinatesHistory()
     {
-        $_GET["ip"] = "1234:ab1::1a2b:123:1234";
-        $res = $this->controller->checkIpAction();
+        $_GET["location"] = "56.16280,15.58697";
+         $_GET["type"] = "history";
+
+        $res = $this->controller->checkWeatherAction();
         $this->assertIsObject($res);
     }
 
-    public function testcheckIpActionNotValid()
+
+    public function testcheckWeatherActionIp()
     {
-        $_GET["ip"] = "notValid";
-        $res = $this->controller->checkIpAction();
+        $_GET["location"] = "85.24.145.234";
+        $_GET["type"] = "prognos";
+
+        $res = $this->controller->checkWeatherAction();
+        $this->assertIsObject($res);
+    }
+
+
+    public function testcheckWeatherActionIpHistory()
+    {
+        $_GET["location"] = "85.24.145.234";
+        $_GET["type"] = "history";
+
+        $res = $this->controller->checkWeatherAction();
+        $this->assertIsObject($res);
+    }
+
+
+
+
+    public function testcheckWeatherActionWrongInput()
+    {
+        $_GET["location"] = "test";
+        $_GET["type"] = "prognos";
+
+        $res = $this->controller->checkWeatherAction();
+        $this->assertIsObject($res);
+    }
+
+    public function testcheckWeatherActionWrongInputTwo()
+    {
+        $_GET["location"] = "155.22,155.22";
+        $_GET["type"] = "prognos";
+
+        $res = $this->controller->checkWeatherAction();
+        $this->assertIsObject($res);
+    }
+
+    public function testcheckWeatherActionWrongInputThree()
+    {
+        $_GET["location"] = "hej,15.58697";
+        $_GET["type"] = "prognos";
+
+        $res = $this->controller->checkWeatherAction();
+        $this->assertIsObject($res);
+    }
+
+    public function testcheckWeatherActionWrongInputFour()
+    {
+        $_GET["location"] = "test";
+        $_GET["type"] = "history";
+
+        $res = $this->controller->checkWeatherAction();
+        $this->assertIsObject($res);
+    }
+
+    public function testcheckWeatherActionWrongInputFive()
+    {
+        $_GET["location"] = "155.22,155.22";
+        $_GET["type"] = "history";
+
+        $res = $this->controller->checkWeatherAction();
+        $this->assertIsObject($res);
+    }
+
+    public function testcheckWeatherActionWrongInputSix()
+    {
+        $_GET["location"] = "hej,15.58697";
+        $_GET["type"] = "history";
+
+        $res = $this->controller->checkWeatherAction();
         $this->assertIsObject($res);
     }
 }

@@ -1,14 +1,15 @@
 <?php
 
-namespace Anax\Validator;
+namespace Anax\Controller;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
+use Anax\Weather\WeatherJSONController;
 
 /**
- * test the ValidateIpController.
+ * test the ValidateIpRestController
  */
-class ValidateIpControllerTest extends TestCase
+class WeatherJSONControllerTest extends TestCase
 {
     // Create the di container.
     public $di;
@@ -17,10 +18,8 @@ class ValidateIpControllerTest extends TestCase
     /**
      * Prepare before each test.
      */
-
     public function setUp()
     {
-
         // di setup
         $this->di = new DIFactoryConfig();
         $this->di->loadServices(ANAX_INSTALL_PATH . "/config/di");
@@ -29,41 +28,52 @@ class ValidateIpControllerTest extends TestCase
         $this->di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         // Setup the controller
-        $this->controller = new ValidateIpController();
+        $this->controller = new WeatherJSONController();
         $this->controller->setDI($this->di);
         //$this->controller->initialize();
     }
 
     /**
-     * Test the route "index".
+     * test the validator returning result in JSON-format
      */
-    public function testIndexAction()
+    public function testcheckWeatherRestActionPrognos()
     {
-        $res = $this->controller->indexAction();
-        $this->assertIsObject($res);
+        $_GET["location"] = "56.16280,15.58697";
+        $_GET["type"] = "prognosAPI";
+        $res = $this->controller->checkWeatherRestAction();
+        $this->assertIsArray($res);
     }
 
-    /**
-     * Test the route "checkIpAction" in three ways
-     */
-    public function testcheckIpActionIpv4()
+    public function testcheckWeatherRestActionHistory()
     {
-        $_GET["ip"] = "127.0.0.1";
-        $res = $this->controller->checkIpAction();
-        $this->assertIsObject($res);
+        $_GET["location"] = "56.16280,15.58697";
+        $_GET["type"] = "historyAPI";
+        $res = $this->controller->checkWeatherRestAction();
+        $this->assertIsArray($res);
     }
 
-    public function testcheckIpActionIpv6()
+
+    public function testcheckWeatherRestActionPrognosIP()
     {
-        $_GET["ip"] = "1234:ab1::1a2b:123:1234";
-        $res = $this->controller->checkIpAction();
-        $this->assertIsObject($res);
+        $_GET["location"] = "85.24.145.234";
+        $_GET["type"] = "prognosAPI";
+        $res = $this->controller->checkWeatherRestAction();
+        $this->assertIsArray($res);
     }
 
-    public function testcheckIpActionNotValid()
+    public function testcheckWeatherRestActionHistoryIP()
     {
-        $_GET["ip"] = "notValid";
-        $res = $this->controller->checkIpAction();
-        $this->assertIsObject($res);
+        $_GET["location"] = "85.24.145.234";
+        $_GET["type"] = "historyAPI";
+        $res = $this->controller->checkWeatherRestAction();
+        $this->assertIsArray($res);
+    }
+
+    public function testcheckWeatherRestActionHistoryWrongInput()
+    {
+        $_GET["location"] = "testingwronginput";
+        $_GET["type"] = "historyAPI";
+        $res = $this->controller->checkWeatherRestAction();
+        $this->assertIsArray($res);
     }
 }
