@@ -7,12 +7,6 @@
     "autoload": {
         "psr-4": {"Anax\\": "src/"}
     },
-    "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/christoffer-bolin/weathermodule"
-    }
-    ],
     "require": {
         "anax/anax-ramverk1-me": "^1.0.0",
         "anax/anax-cli": "^1.2",
