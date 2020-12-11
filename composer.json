@@ -10,7 +10,9 @@
     "require": {
         "anax/anax-ramverk1-me": "^1.0.0",
         "anax/anax-cli": "^1.2",
-        "chbl/weather": "dev-master"
+        "chbl/weather": "dev-master",
+        "anax/htmlform": "^2.0",
+        "anax/database-active-record": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7"
